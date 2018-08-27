@@ -47,13 +47,13 @@ Once you are done, make sure to also determine the value for the Date field of t
 look into the RFC to understand the expected format and then google for the format in combination with Java.
 
 ### Exercise 2.3)
-Now let's add some sensibility to the actually requestes resources. Remember that our server now always serves
-the same file regardless of the acutual request. In HTTP, the first line of a request is called start-line. It 
+Now let's add some sensibility to the actually requested resources. Remember that our server now always serves
+the same file regardless of the actual request. In HTTP, the first line of a request is called start-line. It 
 contains the HTTP-method, the request target (which is the requested resource), and the HTTP protocol version. 
 Read up on the start-line in the RFC. 
 
 Revise the ConnectionHandler in a way that it returns the correct status code if the HTTP method used in the
-request is not GET. Read up on status codes and HTTP methods in the RFC. 
+request is not *GET*. Read up on status codes and HTTP methods in the RFC. 
 
 Now revise the ConnectionHandler in a way that it returns the correct status code if the requested resource is
 not /index.html.   
