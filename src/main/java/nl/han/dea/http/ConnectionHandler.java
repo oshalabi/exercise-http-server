@@ -9,10 +9,11 @@ public class ConnectionHandler {
     private static final String HTTP_HEADER = "HTTP/1.1 200 OK\n" +
             "Date: Mon, 27 Aug 2018 14:08:55 +0200\n" +
             "HttpServer: Simple DEA Webserver\n" +
-            "Content-Length: 90\n" +
+            "Content-Length: 106\n" +
             "Content-Type: text/html\n";
 
-    private static final String HTTP_BODY = "<html>\n" +
+    private static final String HTTP_BODY = "<!DOCTYPE html>\n" +
+            "<html>\n" +
             "<body>\n" +
             "<h1>Hi DEA folks!</h1>\n" +
             "<p>This is a simple line in html.</p>\n" +
