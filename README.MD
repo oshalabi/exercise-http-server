@@ -42,16 +42,15 @@ Hierbij kun je denken aan plaatjes, configuratiebestanden of html-bestanden.
 ```html
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Simple Http Server</title>
-    </head>
-    <body>
-        <h1>Hi DEA folks!</h1>
-        <p>This is a simple line in html.</p>
-    </body>
+<head>
+<meta charset="UTF-8">
+<title>Simple Http Server</title>
+</head>
+<body>
+<h1>Hi DEA folks!</h1>
+<p>This is a simple line in html.</p>
+</body>
 </html>
-
 ```
 
 ### 2.2) Retourneer _index.html_
@@ -59,6 +58,8 @@ Pas de `ConnectionHandler` zodanig aan dat voor de body van het HTTP-request de 
 * Gebruik voor het inlezen van een bestand de onderstaande methode. 
 * Plaats deze in een aparte klasse genaamd `HtmlPageReader.
 * Merk op dat onderstaande methode verwacht dat het html-bestand in de map _pages/_ staat.
+* Gebruik deze methode om nu de inhoud van _index.html_ te retourneren. De constante `HTTP_BODY` uit `ConnectionHandler`
+kun je nu verwijderen.
 
 ```java
 public class HtmlPageReader {
@@ -102,17 +103,24 @@ start-line.
 pagina geretourneert moet worden.
 * Voeg een tweede pagina, bijvoorbeeld _about.html_ toe en test of deze geretourneert wordt door naar 
 [http://localhost:8383/about.html]() te navigeren.
+* Merk op dat het nu enkel mogelijk moet zijn bestaande pagina's op te vragen, de happy-flow. 
 
-### 2.6) Retourneren van correct Http-status codes.
-Momenteel wordt nog standaard de Http-code 200 geretourneerd. Zorg ervoor dat de `ConnectionHandler` de een 
+### 2.6) Afhandelen van niet-bestaande pagina's
+Momenteel wordt nog standaard de Http statuscode 200 geretourneerd. Zorg ervoor dat de `ConnectionHandler` de een 
 correcte statuscode retourneert indien de _request-target_ niet bestaat.
 
-### 2.7) Correcte versie van het Http-protocol
-Zoek uit welke versie van het Http-protocol wordt gebruikt en zorg ervoor dat dit ook correct staat in de 
-Http-response-header.
+* Zorg ervoor dat de relevante methodes uit `HtmlPageReader` een _Exception_ gooien indien er een Html pagina geladen
+moet worden die niet bestaat.
+* Gebruik deze exceptie in de `ConnectionHandler` om zowel de juiste Http-Header, als Body te retourneren.
 
 # Extra uitdaging
-Het Http-protocol kent meer methodes dan enkel de *GET*. Lees de RFC voor meer informatie en implementeer ook de
+* Verbeter de foutafhandeling. Momenteel wordt enkel onderscheid gemaakt tussen 404 en 200. Voeg ook, op een correcte
+en zinnig manier ondersteuning voor de colgende foutcode's toe:
+    * 500 INTERNAL SERVER ERROR
+    * 501 NOT IMPLEMENTED
+    * 505 HTTP VERSION NOT SUPPORTED
+    
+* Het Http-protocol kent meer methodes dan enkel de *GET*. Lees de RFC voor meer informatie en implementeer ook de
 methode *HEAD*.
 
 
@@ -124,6 +132,5 @@ methode *HEAD*.
 
 
  
-
 
 
