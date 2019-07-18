@@ -31,39 +31,60 @@ public class ConnectionHandler implements Runnable {
             var outputStreamWriter = new BufferedWriter(
                     new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.US_ASCII));
 
-            parseRequest(inputStreamReader);
-            writeResponse(outputStreamWriter);
+            var startLine = parseRequest(inputStreamReader);
+
+            if (startLine == null) { // Prevent a null value from creating a NullPointerException
+                return;
+            }
+
+            var resource = startLine.split(" ")[1];
+            writeResponse(outputStreamWriter, resource);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void parseRequest(BufferedReader inputStreamReader) throws IOException {
+    private String parseRequest(BufferedReader inputStreamReader) throws IOException {
         var request = inputStreamReader.readLine();
+        var startLine = request;
 
         while (request != null && !request.isEmpty()) {
             System.out.println(request);
             request = inputStreamReader.readLine();
         }
+
+        return startLine;
     }
 
-    private void writeResponse(BufferedWriter outputStreamWriter) {
+    private void writeResponse(BufferedWriter outputStreamWriter, String resource) {
+        System.out.println("Writing response for resource: " + resource);
         try {
-            outputStreamWriter.write(generateHeader());
-            outputStreamWriter.newLine();
-            outputStreamWriter.write(new HtmlPageReader().readFile("index.html"));
-            outputStreamWriter.newLine();
+            writeHeader(outputStreamWriter, resource);
+            writeBody(outputStreamWriter, resource);
             outputStreamWriter.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    private String generateHeader() {
+    private void writeHeader(BufferedWriter outputStreamWriter, String resource) throws IOException {
+        outputStreamWriter.write(generateHeader(resource));
+        outputStreamWriter.newLine();
+    }
+
+    private void writeBody(BufferedWriter outputStreamWriter, String resource) throws IOException {
+        var file = new HtmlPageReader().readFile(resource);
+
+        outputStreamWriter.write(file);
+        outputStreamWriter.newLine();
+    }
+
+    private String generateHeader(String resource) {
+        var length = new HtmlPageReader().getLength(resource);
+
         return HTTP_HEADER
-                .replace(KEY_CONTENT_LENGTH, new HtmlPageReader().getLength("index.html"))
+                .replace(KEY_CONTENT_LENGTH, length)
                 .replace(KEY_DATE, OffsetDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME));
     }
 
