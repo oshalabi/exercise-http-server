@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-public class ConnectionHandler {
+public class ConnectionHandler implements Runnable {
 
     private static final String HTTP_HEADER = "HTTP/1.1 200 OK\n" +
             "Date: Mon, 27 Aug 2018 14:08:55 +0200\n" +
@@ -66,5 +66,10 @@ public class ConnectionHandler {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public void run() {
+        handle();
     }
 }
