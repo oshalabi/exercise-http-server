@@ -3,13 +3,16 @@ package nl.han.dea.http;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ConnectionHandler implements Runnable {
 
     private static final String KEY_CONTENT_LENGTH = "{{CONTENT_LENGTH}}";
+    private static final String KEY_DATE = "{{DATE}}";
 
     private static final String HTTP_HEADER = "HTTP/1.1 200 OK\n" +
-            "Date: Mon, 27 Aug 2018 14:08:55 +0200\n" +
+            "Date: " + KEY_DATE + "\n" +
             "HttpServer: Simple DEA Webserver\n" +
             "Content-Length: " + KEY_CONTENT_LENGTH + "\n" +
             "Content-Type: text/html\n";
@@ -59,7 +62,9 @@ public class ConnectionHandler implements Runnable {
     }
 
     private String generateHeader() {
-        return HTTP_HEADER.replace(KEY_CONTENT_LENGTH, new HtmlPageReader().getLength("index.html"));
+        return HTTP_HEADER
+                .replace(KEY_CONTENT_LENGTH, new HtmlPageReader().getLength("index.html"))
+                .replace(KEY_DATE, OffsetDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME));
     }
 
     @Override
