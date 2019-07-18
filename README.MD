@@ -42,16 +42,15 @@ Hierbij kun je denken aan plaatjes, configuratiebestanden of html-bestanden.
 ```html
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Simple Http Server</title>
-    </head>
-    <body>
-        <h1>Hi DEA folks!</h1>
-        <p>This is a simple line in html.</p>
-    </body>
+<head>
+<meta charset="UTF-8">
+<title>Simple Http Server</title>
+</head>
+<body>
+<h1>Hi DEA folks!</h1>
+<p>This is a simple line in html.</p>
+</body>
 </html>
-
 ```
 
 ### 2.2) Retourneer _index.html_
@@ -59,6 +58,8 @@ Pas de `ConnectionHandler` zodanig aan dat voor de body van het HTTP-request de 
 * Gebruik voor het inlezen van een bestand de onderstaande methode. 
 * Plaats deze in een aparte klasse genaamd `HtmlPageReader.
 * Merk op dat onderstaande methode verwacht dat het html-bestand in de map _pages/_ staat.
+* Gebruik deze methode om nu de inhoud van _index.html_ te retourneren. De constante `HTTP_BODY` uit `ConnectionHandler`
+kun je nu verwijderen.
 
 ```java
 public class HtmlPageReader {
@@ -114,16 +115,3 @@ Http-response-header.
 # Extra uitdaging
 Het Http-protocol kent meer methodes dan enkel de *GET*. Lees de RFC voor meer informatie en implementeer ook de
 methode *HEAD*.
-
-
-
-
-
-
-
-
-
- 
-
-
-
