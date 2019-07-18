@@ -109,6 +109,10 @@ pagina geretourneert moet worden.
 Momenteel wordt nog standaard de Http statuscode 200 geretourneerd. Zorg ervoor dat de `ConnectionHandler` de een 
 correcte statuscode retourneert indien de _request-target_ niet bestaat.
 
+* Zorg ervoor dat de relevante methodes uit `HtmlPageReader` een _Exception_ gooien indien er een Html pagina geladen
+moet worden die niet bestaat.
+* Gebruik deze exceptie in de `ConnectionHandler` om zowel de juiste Http-Header, als Body te retourneren.
+
 # Extra uitdaging
 * Verbeter de foutafhandeling. Momenteel wordt enkel onderscheid gemaakt tussen 404 en 200. Voeg ook, op een correcte
 en zinnig manier ondersteuning voor de colgende foutcode's toe:
@@ -128,6 +132,5 @@ methode *HEAD*.
 
 
  
-
 
 
