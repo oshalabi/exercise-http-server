@@ -1,5 +1,7 @@
 package nl.han.dea.http;
 
+import nl.han.dea.http.exceptions.ResourceNotAvailableException;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -10,8 +12,12 @@ public class ConnectionHandler implements Runnable {
 
     private static final String KEY_CONTENT_LENGTH = "{{CONTENT_LENGTH}}";
     private static final String KEY_DATE = "{{DATE}}";
+    private static final String KEY_HTTP_STATUS = "{{HTTP_STATUS}}";
 
-    private static final String HTTP_HEADER = "HTTP/1.1 200 OK\n" +
+    private static final String HTTP_STATUS_200 = "200 OK";
+    private static final String HTTP_STATUS_404 = "404 NOT FOUND";
+
+    private static final String HTTP_HEADER = "HTTP/1.1 " + KEY_HTTP_STATUS + "\n" +
             "Date: " + KEY_DATE + "\n" +
             "HttpServer: Simple DEA Webserver\n" +
             "Content-Length: " + KEY_CONTENT_LENGTH + "\n" +
@@ -74,18 +80,32 @@ public class ConnectionHandler implements Runnable {
     }
 
     private void writeBody(BufferedWriter outputStreamWriter, String resource) throws IOException {
-        var file = new HtmlPageReader().readFile(resource);
+        var file = "\n";
+
+        try {
+            file = new HtmlPageReader().readFile(resource);
+        } catch (ResourceNotAvailableException e) {
+            System.out.println(e.getMessage());
+        }
 
         outputStreamWriter.write(file);
         outputStreamWriter.newLine();
     }
 
     private String generateHeader(String resource) {
-        var length = new HtmlPageReader().getLength(resource);
+        var length = "0";
+        var status = HTTP_STATUS_200;
+
+        try {
+            length = new HtmlPageReader().getLength(resource);
+        } catch (ResourceNotAvailableException e) {
+            status = HTTP_STATUS_404;
+        }
 
         return HTTP_HEADER
                 .replace(KEY_CONTENT_LENGTH, length)
-                .replace(KEY_DATE, OffsetDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME));
+                .replace(KEY_DATE, OffsetDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME))
+                .replace(KEY_HTTP_STATUS, status);
     }
 
     @Override
