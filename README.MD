@@ -104,13 +104,9 @@ pagina geretourneert moet worden.
 * Voeg een tweede pagina, bijvoorbeeld _about.html_ toe en test of deze geretourneert wordt door naar 
 [http://localhost:8383/about.html]() te navigeren.
 
-### 2.6) Retourneren van correct Http-status codes.
+### 2.6) Retourneren van correcte Http-status codes.
 Momenteel wordt nog standaard de Http-code 200 geretourneerd. Zorg ervoor dat de `ConnectionHandler` de een 
 correcte statuscode retourneert indien de _request-target_ niet bestaat.
-
-### 2.7) Correcte versie van het Http-protocol
-Zoek uit welke versie van het Http-protocol wordt gebruikt en zorg ervoor dat dit ook correct staat in de 
-Http-response-header.
 
 # Extra uitdaging
 Het Http-protocol kent meer methodes dan enkel de *GET*. Lees de RFC voor meer informatie en implementeer ook de
