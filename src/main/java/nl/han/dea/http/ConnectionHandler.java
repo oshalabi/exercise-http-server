@@ -59,7 +59,7 @@ public class ConnectionHandler implements Runnable {
         try {
             outputStreamWriter.write(HTTP_HEADER);
             outputStreamWriter.newLine();
-            outputStreamWriter.write(HTTP_BODY);
+            outputStreamWriter.write(new HtmlPageReader().readFile("index.html"));
             outputStreamWriter.newLine();
             outputStreamWriter.flush();
         } catch (IOException e) {
