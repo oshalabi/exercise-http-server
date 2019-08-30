@@ -5,12 +5,12 @@ raken met het Http-protocol in een simpele Java-server.
 
 Web servers, gebruikt op het internet zijn feitelijk server-software die voldoen aan het Http-protocol.
 Het Http-protocol, zoals ook alle andere internet protocols, is gespecificeerd in een *Request for Comments* 
-(RFC). De RFC voor Http can hier gevonden worden: [https://tools.ietf.org/html/rfc7230]().
+(RFC). De RFC voor Http kan hier gevonden worden: [https://tools.ietf.org/html/rfc7230](ttps://tools.ietf.org/html/rfc7230).
 
 # Oefeningen
 Bekijk de startcode in de master-branch. De server is op te starten via de main-methode van de `HttpServer`
 klasse. 
-Voer deze methode uit. De Server is nu opgestart. Navigeer via je browser naar [http://localhost:8383/index.html]()
+Voer deze methode uit. De Server is nu opgestart. Navigeer via je browser naar [http://localhost:8383/index.html](http://localhost:8383/index.html)
 om te zien wat de server teruggeeft.
 
 ## 1) Afhandelen meerdere requests
@@ -28,7 +28,7 @@ niet meer afgesloten na een Http-request.
 ## 2) Correct afhandelen van het Http-request
 Bekijk de klasse `ConnectionHandler`. Hierin kun je zien dat de server momenteel niks doet met de inhoud van het 
 Http-request en altijd dezelfde inhoud en status retourneert. Je kunt dit testen door het wijzigen van een deel van 
-URL in je browser. ook de URL [http://localhost:8383/what-a-terribly-bigoted-server.html]() zal precies dezelfde content
+URL in je browser. ook de URL [http://localhost:8383/what-a-terribly-bigoted-server.html](http://localhost:8383/what-a-terribly-bigoted-server.html) zal precies dezelfde content
 retourneren. In dit onderdeel zul je dit gaan verbeteren.
 
 ### 2.1) Toevoegen van een _index.html_
@@ -84,11 +84,11 @@ public class HtmlPageReader {
 Voeg nu wat extra inhoud toe aan je _index.html_, herstart je server en bekijk het resultaat. De inhoud zal nu 
 niet meer volledig gerenderd worden. Dit komt omdat de _content-length_ in de Http-header niet meer correct is.
 * Voeg aan de klasse `HtmlPageReader` een methode toe die op de correcte _content-length_ kan bepalen van een 
-gegeven bestand. Bekijk de RFC om te begrijpen hoe de _content-length_ moeten worden berekend.
+gegeven bestand. Bekijk de [RFC](https://tools.ietf.org/html/rfc7230) om te begrijpen hoe de _content-length_ moeten worden berekend.
 * Gebruik de nieuwe methode om programmatisch een correcte Http-header te genereren.
 
 ### 2.4) Toevoegen correcte datum in de Http-header
-Voeg ook een automatisch bepaalde datum aan het _Date_ veld van de Http-header toe. Gebruik hierbij weer de RFC
+Voeg ook een automatisch bepaalde datum aan het _Date_ veld van de Http-header toe. Gebruik hierbij weer de [RFC](https://tools.ietf.org/html/rfc7230)
 om te bepalen welk formaat deze moet hebben.
 
 ### 2.5) Retourneer van het correcte bestand
@@ -97,7 +97,7 @@ dezelfde _index.html_ teruggeeft, los van de url van het daarwerkelijke request.
 ervoor zorgt 
 
 * De eerste regel van een Http-request, de start-line, bevat de Http-methode (in dit geval: GET), de _request-target_ 
-(in dit geval het html-bestand) en de versie van het Http Protocol. Bekijk de RFC voor meer informatie over de 
+(in dit geval het html-bestand) en de versie van het Http Protocol. Bekijk de [RFC](https://tools.ietf.org/html/rfc7230) voor meer informatie over de 
 start-line.
 * Zorg ervoor dat de `ConnectionHandler` van het Http-request, de start-line gebruikt om te achterhalen welke _html_ 
 pagina geretourneert moet worden.
@@ -120,7 +120,7 @@ en zinnig manier ondersteuning voor de colgende foutcode's toe:
     * 501 NOT IMPLEMENTED
     * 505 HTTP VERSION NOT SUPPORTED
     
-* Het Http-protocol kent meer methodes dan enkel de *GET*. Lees de RFC voor meer informatie en implementeer ook de
+* Het Http-protocol kent meer methodes dan enkel de *GET*. Lees de [RFC](https://tools.ietf.org/html/rfc7230) voor meer informatie en implementeer ook de
 methode *HEAD*.
 
 
