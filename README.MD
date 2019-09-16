@@ -9,8 +9,9 @@ Het Http-protocol, zoals ook alle andere internet protocols, is gespecificeerd i
 
 # Oefeningen
 Bekijk de startcode in de master-branch. De server is op te starten via de main-methode van de `HttpServer`
-klasse. 
-Voer deze methode uit. De Server is nu opgestart. Navigeer via je browser naar [http://localhost:8383/index.html](http://localhost:8383/index.html)
+klasse. Zorg ervoor dat je de startcode op een plaats (directory) zet waar geen spaties in voorkomen.
+
+Voer de main-methode uit. De Server is nu opgestart. Navigeer via je browser naar [http://localhost:8383/index.html](http://localhost:8383/index.html)
 om te zien wat de server teruggeeft.
 
 ## 1) Afhandelen meerdere requests
