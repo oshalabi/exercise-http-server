@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-public class ConnectionHandler {
+public class ConnectionHandler implements Runnable {
 
     private static final String HTTP_HEADER = "HTTP/1.1 200 OK\n" +
             "Date: Mon, 27 Aug 2018 14:08:55 +0200\n" +
@@ -12,19 +12,21 @@ public class ConnectionHandler {
             "Content-Length: 190\n" +
             "Content-Type: text/html\n";
 
-    private static final String HTTP_BODY = "<!DOCTYPE html>\n" +
-            "<html lang=\"en\">\n" +
-            "<head>\n" +
-            "<meta charset=\"UTF-8\">\n" +
-            "<title>Simple Http Server</title>\n" +
-            "</head>\n" +
-            "<body>\n" +
-            "<h1>Hi DEA folks!</h1>\n" +
-            "<p>This is a simple line in html.</p>\n" +
-            "</body>\n" +
-            "</html>\n" +
-            "\n";
+//    private static final String HTTP_BODY = "<!DOCTYPE html>\n" +
+//            "<html lang=\"en\">\n" +
+//            "<head>\n" +
+//            "<meta charset=\"UTF-8\">\n" +
+//            "<title>Simple Http Server</title>\n" +
+//            "</head>\n" +
+//            "<body>\n" +
+//            "<h1>Hi DEA folks!</h1>\n" +
+//            "<p>This is a simple line in html.</p>\n" +
+//            "</body>\n" +
+//            "</html>\n" +
+//            "\n";
+    private HtmlPageReader pageReader = new HtmlPageReader();
     private Socket socket;
+    private String page ="";
 
     public ConnectionHandler(Socket socket) {
         this.socket = socket;
@@ -50,21 +52,34 @@ public class ConnectionHandler {
         var request = inputStreamReader.readLine();
 
         while (request != null && !request.isEmpty()) {
-            System.out.println(request);
+
+                System.out.println(request);
+
+            if(request.startsWith("GET")){
+
+               var path = request.split(" ")[1];
+                page = path;
+            }
             request = inputStreamReader.readLine();
         }
+
     }
 
     private void writeResponse(BufferedWriter outputStreamWriter) {
         try {
             outputStreamWriter.write(HTTP_HEADER);
             outputStreamWriter.newLine();
-            outputStreamWriter.write(HTTP_BODY);
+            outputStreamWriter.write(pageReader.readFile(page));
             outputStreamWriter.newLine();
             outputStreamWriter.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public void run() {
+        handle();
     }
 }
